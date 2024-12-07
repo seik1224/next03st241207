@@ -1,6 +1,6 @@
 import { PerspectiveCamera } from '@react-three/drei'
-import { Canvas, useFrame } from '@react-three/fiber'
-import React, { useRef } from 'react'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import React, { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 
 const Camera = () => {
@@ -73,7 +73,8 @@ const PivotCamera = () => {
     })
 
     return (
-        <group ref={pivotRef} position={[0,2,0]}>
+        // pivot의 중심점
+        <group ref={pivotRef} position={[0,2,0]}> 
             <PerspectiveCamera 
                 ref={cameraRef}
                 makeDefault 
@@ -86,6 +87,33 @@ const PivotCamera = () => {
     )
 }
 
+/*
+    [ useThree ]
+    three js에서 다룰 수 있는 오브젝트들을 넣어놓은 hook
+    
+    [ useThree로 기본 카메라 접근하는 방법 ]
+    PersepectiveCamera를 만들지 않고 현재 활성화된 카메라를 참조
+*/
+const ThreeCamera = () => {
+    const { camera, set } = useThree();
+    
+    useEffect(()=>{
+        // 카메라 초기 설정
+        camera.position.set(0, 2, 5);
+        camera.rotation.x = (-Math.PI / 180) * 10;
+        camera.updateProjectionMatrix();
+
+        // 기본 카메라로 설정
+        set({camera});
+    },[camera, set]);
+
+    useFrame(()=>{
+        camera.rotation.y += 0.1;
+    })
+
+    return null;
+}
+
 const Three03 = () => {
   return (
     <>
@@ -94,11 +122,9 @@ const Three03 = () => {
                 <ambientLight intensity={5} />
 
                 {/* <Camera /> */}
-
                 {/* <TwoNodeCamera /> */}
-
-                <PivotCamera />
-
+                {/* <PivotCamera /> */}
+                <ThreeCamera />
                 <mesh position={[0,0,0]}>
                     <boxGeometry args={[1,1,1]} />
                     <meshStandardMaterial color={'red'} />
