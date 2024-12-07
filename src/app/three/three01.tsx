@@ -1,4 +1,4 @@
-import { Box, Cone, Cylinder, MeshTransmissionMaterial, OrbitControls, Sphere, Torus } from '@react-three/drei'
+import { Box, Cone, Cylinder, Environment, MeshTransmissionMaterial, OrbitControls, Sky, Sphere, Torus } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import React from 'react'
 
@@ -59,6 +59,12 @@ const Three01 = () => {
 
                 {/* 카메라 조작 컴포넌트 */}
                 <OrbitControls />
+
+                {/* 배경 */}
+                <Sky sunPosition={[100,20,100]} />
+                
+                {/* 주변환경 */}
+                <Environment preset='city' />
             </Canvas>
         </div>
     </>
