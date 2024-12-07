@@ -47,8 +47,6 @@ const Three06 = () => {
                         <Scene color='blue' />
                     </Scroll>
                 </ScrollControls>
-
-                
             </Canvas>
         </div>
     </>
