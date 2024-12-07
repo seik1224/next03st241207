@@ -67,21 +67,22 @@ const PivotCamera = () => {
     const cameraRef = useRef<THREE.PerspectiveCamera>(null);
  
     useFrame(()=>{
-        if(cameraRef.current){
-            cameraRef.current.rotation.y += 0.1;
+        if(pivotRef.current){
+            pivotRef.current.rotation.y += 0.1;
         }
     })
 
     return (
-        <PerspectiveCamera 
-            ref={cameraRef}
-            makeDefault 
-            position={[0,2,5]} 
-            rotation={[(-Math.PI/180)*10, 0,0]}
-            fov={75} 
-            near={0.1} 
-            far={1000}
-        />
+        <group ref={pivotRef} position={[0,2,0]}>
+            <PerspectiveCamera 
+                ref={cameraRef}
+                makeDefault 
+                position={[0,0,5]} 
+                fov={75} 
+                near={0.1} 
+                far={1000}
+            />
+        </group>
     )
 }
 
@@ -95,6 +96,8 @@ const Three03 = () => {
                 {/* <Camera /> */}
 
                 {/* <TwoNodeCamera /> */}
+
+                <PivotCamera />
 
                 <mesh position={[0,0,0]}>
                     <boxGeometry args={[1,1,1]} />
